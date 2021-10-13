@@ -23,9 +23,18 @@ module NavigationHelpers
 
     else
       begin
-        page_name =~ /^the (.*) page$/
+        page_name =~ /^the (.*) page( for "([^"].*)")?$/
+        title = $3
         path_components = $1.split(/\s+/)
-        self.send(path_components.push('path').join('_').to_sym)
+        # are we using 'page for "MOVIE_NAME"' format or not?
+        if !title.nil?
+          movie = Movie.find_by(title: title)
+          # details is the same as show page, which is routed with movie_path
+          if path_components == ["details"] then path_components = [] end
+          self.send(path_components.push('movie_path').join('_').to_sym, movie)
+        else
+          self.send(path_components.push('path').join('_').to_sym)
+        end
       rescue NoMethodError, ArgumentError
         raise "Can't find mapping from \"#{page_name}\" to a path.\n" +
           "Now, go and add a mapping in #{__FILE__}"
