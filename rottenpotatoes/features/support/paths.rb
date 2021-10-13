@@ -26,7 +26,6 @@ module NavigationHelpers
         page_name =~ /^the (.*) page( for "([^"].*)")?$/
         title = $3
         path_components = $1.split(/\s+/)
-        # are we using 'page for "MOVIE_NAME"' format or not?
         if !title.nil?
           movie = Movie.find_by(title: title)
           # details is the same as show page, which is routed with movie_path
