@@ -3,7 +3,7 @@
 
 1 deprecation warning total
 
-Finished in 0.07296 seconds (files took 1.52 seconds to load)
+Finished in 0.12389 seconds (files took 1.58 seconds to load)
 9 examples, 0 failures
 
-Coverage report generated for Cucumber Features, RSpec to /home/ec2-user/environment/hw-acceptance/rottenpotatoes/coverage. 36 / 44 LOC (81.82%) covered.
+Coverage report generated for Cucumber Features, RSpec to /home/ec2-user/environment/hw-acceptance/rottenpotatoes/coverage. 64 / 79 LOC (81.01%) covered.
