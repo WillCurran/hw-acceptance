@@ -1,6 +1,6 @@
 class Movie < ActiveRecord::Base
     def has_director
-        self.director != nil
+        self.director != '' and self.director != nil
     end
         
     def Movie.find_similar_movies(id, director)

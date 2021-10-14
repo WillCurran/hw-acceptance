@@ -11,7 +11,7 @@ RSpec.describe Movie, type: :model do
         end
         context 'when director does not exist' do
             it 'should return false' do
-                expect(Movie.new(:director => nil).has_director).to eq(false)
+                expect(Movie.new(:director => '').has_director).to eq(false)
             end
         end
     end
@@ -19,7 +19,7 @@ RSpec.describe Movie, type: :model do
         it 'should return the correct matches for movies by the same director' do
             seed_movies = [
                     {:id => 1, :director => 'Bobby Jones'}, 
-                    {:id => 221, :director => nil},
+                    {:id => 221, :director => ''},
                     {:id => 31, :director => 'Bobby Jones'},
                     {:id => 2132, :director => 'Brad Bitt'},
                     {:id => 422, :director => 'Stanley Fakerick'},
@@ -37,7 +37,7 @@ RSpec.describe Movie, type: :model do
         it 'should not return matches of movies by different directors' do
             seed_movies = [
                     {:id => 1, :director => 'Bobby Jones'}, 
-                    {:id => 221, :director => nil},
+                    {:id => 221, :director => ''},
                     {:id => 31, :director => 'Bobby Jones'},
                     {:id => 2132, :director => 'Brad Bitt'},
                     {:id => 422, :director => 'Stanley Fakerick'},
