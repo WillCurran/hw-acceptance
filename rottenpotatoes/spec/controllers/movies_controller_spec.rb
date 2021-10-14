@@ -28,7 +28,7 @@ RSpec.describe MoviesController, type: :controller do
             it 'should provide a list of movies' do
                 fake_movies = [
                     double('Movie', :id => 1, :director => 'Stanley Fakerick'), 
-                    double('Movie', :id => 2, :director => 'Stanley Fakerick'),
+                    double('Movie', :id => 2, :director => 'Stanley Fakerick')
                     ]
                 fake_query_movie = double('Movie', :id => 3, :director => 'Stanley Fakerick')
                 fake_query_movie.stub(:has_director).and_return(true)

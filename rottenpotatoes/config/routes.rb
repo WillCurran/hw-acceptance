@@ -5,5 +5,5 @@ Rottenpotatoes::Application.routes.draw do
   # details is same as 'show'
   get '/movies/:id', to: 'movies#show', as: 'details_movie'
   # match 'similar_movie', to: 'movies#similar_movie', via: :all
-  match 'similar_movie/:id', to: 'movies#similar_movie', via: :all, as: 'similar_movie'
+  match 'movies/:id', to: 'movies#similar_movie', via: :all, as: 'similar_movie'
 end
