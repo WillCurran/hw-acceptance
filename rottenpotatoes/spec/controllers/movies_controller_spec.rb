@@ -11,7 +11,7 @@ RSpec.describe MoviesController, type: :controller do
             Movie.stub(:find).and_return(fake_query_movie)
             Movie.stub(:find_similar_movies).and_return(fake_movies)
             expect(Movie).to receive(:find_similar_movies).with('123', 'Stanley Fakerick') # TODO - should this be a string or int??
-            get :similar_movie, {:id => '123'}
+            get :similar_movie, {:id => 123}
         end
         
         it 'should render similar movies view' do
@@ -20,7 +20,7 @@ RSpec.describe MoviesController, type: :controller do
             fake_query_movie.stub(:has_director).and_return(true)
             Movie.stub(:find).and_return(fake_query_movie)
             Movie.stub(:find_similar_movies).and_return(fake_movies)
-            get :similar_movie, {:id => '123'}
+            get :similar_movie, {:id => 123}
             expect(response).to render_template('similar_movie')
         end
         
@@ -34,18 +34,19 @@ RSpec.describe MoviesController, type: :controller do
                 fake_query_movie.stub(:has_director).and_return(true)
                 Movie.stub(:find).and_return(fake_query_movie)
                 Movie.stub(:find_similar_movies).and_return(fake_movies)
-                get :similar_movie, {:id => '3'}
+                get :similar_movie, {:id => 3}
                 expect(assigns(:movies)).to eq(fake_movies)
             end
         end
         
         context 'when we don\'t know director' do
             it 'should redirect to home page' do
-                fake_query_movie = double('Movie', :id => 3, :director => nil) # TODO - '' or nil?
+                fake_query_movie = double('Movie', 
+                    :title => 'fake_movie', :id => 3, :director => '')
                 fake_query_movie.stub(:has_director).and_return(false)
                 Movie.stub(:find).and_return(fake_query_movie)
-                get :similar_movie, {:id => '123'}
-                expect(response).to redirect_to movies_path # TODO - redirect? need to make sure flash is set?
+                get :similar_movie, {:id => 123}
+                expect(response).to redirect_to movies_path
             end
         end
     end
