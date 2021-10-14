@@ -1,4 +1,9 @@
 class Movie < ActiveRecord::Base
-    def self.find_similar_movies(id)
+    def has_director
+        return self.director != nil
+    end
+        
+    def Movie.find_similar_movies(id, director)
+        # all movies where director= (use where)
     end
 end

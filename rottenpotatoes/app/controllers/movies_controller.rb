@@ -13,8 +13,8 @@ class MoviesController < ApplicationController
   def similar_movie
     id = params[:id]
     @movie = Movie.find id
-    unless @movie.director.nil?
-      @movies = Movie.find_similar_movies(id)
+    if @movie.has_director
+      @movies = Movie.find_similar_movies(id, @movie.director)
     else
       redirect_to movies_path
     end
