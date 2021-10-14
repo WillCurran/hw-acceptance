@@ -9,6 +9,16 @@ class MoviesController < ApplicationController
   def index
     @movies = Movie.all
   end
+  
+  def similar_movie
+    id = params[:id]
+    @movie = Movie.find id
+    unless @movie.director.nil?
+      @movies = Movie.find_similar_movies(id)
+    else
+      redirect_to movies_path
+    end
+  end
 
   def new
     # default: render 'new' template
