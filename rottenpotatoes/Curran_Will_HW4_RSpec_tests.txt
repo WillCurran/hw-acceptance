@@ -1,9 +1,9 @@
 /home/ec2-user/.rvm/rubies/ruby-2.6.6/bin/ruby -I/home/ec2-user/.rvm/gems/ruby-2.6.6/gems/rspec-core-3.7.1/lib:/home/ec2-user/.rvm/gems/ruby-2.6.6/gems/rspec-support-3.7.1/lib /home/ec2-user/.rvm/gems/ruby-2.6.6/gems/rspec-core-3.7.1/exe/rspec --pattern spec/\*\*\{,/\*/\*\*\}/\*_spec.rb
-...........
+................
 
 1 deprecation warning total
 
-Finished in 0.15132 seconds (files took 1.58 seconds to load)
-11 examples, 0 failures
+Finished in 0.1046 seconds (files took 1.54 seconds to load)
+16 examples, 0 failures
 
 Coverage report generated for Cucumber Features, RSpec to /home/ec2-user/environment/hw-acceptance/rottenpotatoes/coverage. 64 / 79 LOC (81.01%) covered.
