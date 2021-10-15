@@ -8,18 +8,27 @@ class MoviesController < ApplicationController
   end
 
   def index
-      reconcile_session
-      @all_ratings = Movie.all_ratings
-      @ratings_selected = params[:ratings].nil? ? @all_ratings.to_a : params[:ratings].keys
-      @title_style = params[:active_col] == 'title' ? 'hilite bg-warning' : ''
-      @release_style = params[:active_col] == 'release_date' ? 'hilite bg-warning' : ''
-      @movies = Movie.with_ratings(@ratings_selected)
-      if !params[:active_col].nil? && !params[:sort_dir].nil?
-        @movies = Movie.with_ratings(@ratings_selected).order(params[:active_col] + ' ' + params[:sort_dir])
-      else
-        @movies = Movie.with_ratings(@ratings_selected)
-      end
+    sort = params[:sort] || session[:sort]
+    case sort
+    when 'title'
+      ordering,@title_header = {:title => :asc}, 'bg-warning hilite'
+    when 'release_date'
+      ordering,@date_header = {:release_date => :asc}, 'bg-warning hilite'
     end
+    @all_ratings = Movie.all_ratings
+    @selected_ratings = params[:ratings] || session[:ratings] || {}
+
+    if @selected_ratings == {}
+      @selected_ratings = Hash[@all_ratings.map {|rating| [rating, rating]}]
+    end
+
+    if params[:sort] != session[:sort] or params[:ratings] != session[:ratings]
+      session[:sort] = sort
+      session[:ratings] = @selected_ratings
+      redirect_to :sort => sort, :ratings => @selected_ratings and return
+    end
+    @movies = Movie.where(rating: @selected_ratings.keys).order(ordering)
+  end
   
   def similar_movie
     id = params[:id]
@@ -66,26 +75,4 @@ class MoviesController < ApplicationController
   def movie_params
     params.require(:movie).permit(:title, :rating, :director, :description, :release_date)
   end
-  
-  def reconcile_session
-      should_redirect = false
-      if params[:ratings].nil? and !session[:ratings].nil?
-        params[:ratings] = session[:ratings]
-        should_redirect = true
-      elsif !params[:ratings].nil?
-        session[:ratings] = params[:ratings]
-      end
-      if params[:active_col].nil? and !session[:active_col].nil?
-        params[:active_col] = session[:active_col]
-        params[:sort_dir] = session[:sort_dir]
-        should_redirect = true
-      elsif !params[:active_col].nil?
-        session[:active_col] = params[:active_col]
-        session[:sort_dir] = params[:sort_dir]
-      end
-      if should_redirect
-        flash.keep
-        redirect_to root_path params
-      end
-    end
 end
